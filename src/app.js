@@ -8,8 +8,8 @@ import './styles.css';
  * @returns {React.ReactElement}
  */
 function App({store}) {
-
-  const list = store.getState().list;
+  
+const list = store.getState().list;
 
   return (
     <div className='App'>
@@ -28,7 +28,10 @@ function App({store}) {
                 <div className='Item-code'>{item.code}</div>
                 <div className='Item-title'>{item.title} { item.selectedCounts > 0 ? `| Выделенно ${item.selectedCounts} раз(а)` : "" } </div>
                 <div className='Item-actions'>
-                  <button onClick={() => store.deleteItem(item.code)}>
+                  <button onClick={(evt) => {
+                    evt.stopPropagation();
+                    store.deleteItem(item.code)
+                  }}>
                     Удалить
                   </button>
                 </div>

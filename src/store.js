@@ -6,7 +6,6 @@ class Store {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
   }
-  
 
   /**
    * Подписка слушателя на изменения состояния
@@ -45,7 +44,8 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: Math.floor(Math.random() * (100 - this.state.list.length) + this.state.list.length), title: 'Новая запись',selectedCounts:0}]
+      listId: this.state.listId + 1,
+      list: [...this.state.list, {code: this.state.listId + 1, title: 'Новая запись',selectedCounts:0}]
     })
   };
 
@@ -68,8 +68,8 @@ class Store {
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {
-        if (item.code === code) {
-          item.selected = !item.selected;
+        if (item.code === code && !item.selected) {
+          item.selected = true;
           item.selectedCounts++;
         }else {
           item.selected = false;
