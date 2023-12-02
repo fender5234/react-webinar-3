@@ -37,16 +37,25 @@ function App({ store }) {
   };
 
   function addProductCart(product) {
-    setCartsProduct(() => {
-      return [...cartsProduct, product];
+    let isProductArray = false;
+
+    cartsProduct.forEach((item) => {
+      if (item.code === product.code) {
+        item.quantity++;
+        isProductArray = true;
+      }
     });
+
+    if (!isProductArray) {
+      setCartsProduct([...cartsProduct, product]);
+    }
   }
 
   function deleteProductCart(product) {
     setCartsProduct(() => {
       return [
         ...cartsProduct.filter((item) => {
-          return item.code !== product;
+          return (item.quantity = 1), item.code !== product;
         }),
       ];
     });
@@ -83,12 +92,7 @@ function App({ store }) {
         scope={productPriceAll}
         deleteProductCart={deleteProductCart}
       />
-      <List
-        list={list}
-        onDeleteItem={callbacks.onDeleteItem}
-        onSelectItem={callbacks.onSelectItem}
-        addProductCart={addProductCart}
-      />
+      <List list={list} addProductCart={addProductCart} />
     </PageLayout>
   );
 }
